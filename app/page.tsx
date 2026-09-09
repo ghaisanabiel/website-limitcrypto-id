@@ -1,15 +1,37 @@
 import IntroSequence from "@/components/IntroSequence";
 import Navbar from "@/components/Navbar";
 import ModuleCard from "@/components/ModuleCard";
+import FloatingPortfolioCard from "@/components/FloatingPortfolioCard";
 import { mockModules } from "@/lib/mock-data";
 import Link from "next/link";
+
+// Floating cards pop in ~3.3s after load — that's roughly when the intro
+// overlay finishes sliding up (see IntroSequence timings). Adjust the delay
+// prop below if you change the intro duration.
+const INTRO_DONE_DELAY = 3.3;
 
 export default function HomePage() {
   return (
     <IntroSequence>
       <Navbar />
       <main>
-        <section className="max-w-4xl mx-auto px-6 pt-24 pb-20 text-center">
+        <section className="relative max-w-4xl mx-auto px-6 pt-24 pb-20 text-center overflow-hidden">
+          <FloatingPortfolioCard
+            className="top-6 left-0 lg:-left-16"
+            label="PnL %"
+            value="+142.6%"
+            sub="BTC · Long"
+            delay={INTRO_DONE_DELAY}
+          />
+          <FloatingPortfolioCard
+            className="bottom-10 right-0 lg:-right-16"
+            label="Module Progress"
+            value="12 / 24"
+            sub="Lessons completed"
+            positive={false}
+            delay={INTRO_DONE_DELAY + 0.2}
+          />
+
           <h1 className="font-display font-extrabold text-4xl md:text-6xl text-ink leading-[1.05]">
             Learn the market.
             <br />
