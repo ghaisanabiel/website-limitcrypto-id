@@ -1,0 +1,25 @@
+import { withAuth } from "next-auth/middleware";
+import { NextResponse } from "next/server";
+
+export default withAuth(
+  function middleware(req) {
+    const isAdminRoute = req.nextUrl.pathname.startsWith("/admin");
+    const role = (req.nextauth.token as any)?.role;
+
+    if (isAdminRoute && role !== "ADMIN") {
+      return NextResponse.redirect(new URL("/dashboard", req.url));
+    }
+    return NextResponse.next();
+  },
+  {
+    callbacks: {
+      // withAuth only invokes the middleware above once this returns true;
+      // otherwise it redirects to the sign-in page automatically.
+      authorized: ({ token }) => !!token,
+    },
+  }
+);
+
+export const config = {
+  matcher: ["/dashboard/:path*", "/admin/:path*"],
+};

@@ -1,0 +1,217 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  MEMBER
+  ADMIN
+}
+
+enum Difficulty {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}
+
+enum ModuleStatus {
+  DRAFT
+  PUBLISHED
+}
+
+enum PurchaseType {
+  MODULE
+  UNLOCK_ALL
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  passwordHash  String?
+  oauthProvider String?
+  role          Role      @default(MEMBER)
+  avatarUrl     String?
+  createdAt     DateTime  @default(now())
+
+  progress      UserProgress[]
+  quizAttempts  UserQuizAttempt[]
+  purchases     Purchase[]
+  registrations EventRegistration[]
+  streak        Streak?
+}
+
+model Market {
+  id      String   @id @default(cuid())
+  name    String   @unique // Crypto / Stocks / Forex
+  slug    String   @unique
+  modules Module[]
+}
+
+model Topic {
+  id      String       @id @default(cuid())
+  name    String       @unique
+  slug    String       @unique
+  modules ModuleTopic[]
+}
+
+model Module {
+  id               String       @id @default(cuid())
+  title            String
+  slug             String       @unique
+  description      String
+  marketId         String
+  market           Market       @relation(fields: [marketId], references: [id])
+  difficulty       Difficulty
+  thumbnailUrl     String?
+  durationSeconds  Int          @default(0)
+  priceCents       Int          @default(0)
+  isFree           Boolean      @default(false)
+  previewAssetId   String?      // short preview clip, separate asset from the full video
+  status           ModuleStatus @default(DRAFT)
+  createdAt        DateTime     @default(now())
+
+  topics    ModuleTopic[]
+  lessons   Lesson[]
+  quiz      Quiz?
+  purchases Purchase[]
+}
+
+model ModuleTopic {
+  moduleId String
+  topicId  String
+  module   Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  topic    Topic  @relation(fields: [topicId], references: [id], onDelete: Cascade)
+
+  @@id([moduleId, topicId])
+  @@index([topicId])
+}
+
+model Lesson {
+  id              String   @id @default(cuid())
+  moduleId        String
+  module          Module   @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  title           String
+  description     String
+  videoAssetId    String   // Mux/Cloudflare Stream asset id — never a raw URL
+  durationSeconds Int      @default(0)
+  order           Int
+
+  checkpoints VideoCheckpoint[]
+  progress    UserProgress[]
+
+  @@index([moduleId])
+}
+
+model VideoCheckpoint {
+  id             String @id @default(cuid())
+  lessonId       String
+  lesson         Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  timestampSecs  Int
+  question       String
+  options        Json   // string[]
+  correctAnswer  String
+  explanation    String
+  order          Int
+
+  @@index([lessonId])
+}
+
+model Quiz {
+  id       String @id @default(cuid())
+  moduleId String @unique
+  module   Module @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  title    String
+
+  questions QuizQuestion[]
+  attempts  UserQuizAttempt[]
+}
+
+model QuizQuestion {
+  id            String @id @default(cuid())
+  quizId        String
+  quiz          Quiz   @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  question      String
+  options       Json   // string[]
+  correctAnswer String
+  explanation   String
+  order         Int
+
+  @@index([quizId])
+}
+
+model UserProgress {
+  id             String    @id @default(cuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lessonId       String
+  lesson         Lesson    @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  completed      Boolean   @default(false)
+  watchedSeconds Int       @default(0) // resume position
+  completedAt    DateTime?
+
+  @@unique([userId, lessonId])
+}
+
+model UserQuizAttempt {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quizId      String
+  quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  score       Int
+  completedAt DateTime @default(now())
+
+  @@index([userId, quizId])
+}
+
+model Purchase {
+  id            String       @id @default(cuid())
+  userId        String
+  user          User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  contentType   PurchaseType
+  moduleId      String?      // null for UNLOCK_ALL
+  module        Module?      @relation(fields: [moduleId], references: [id])
+  priceCents    Int
+  stripePaymentId String     @unique
+  purchasedAt   DateTime     @default(now())
+
+  @@index([userId])
+}
+
+model Event {
+  id             String   @id @default(cuid())
+  title          String
+  slug           String   @unique
+  description    String
+  date           DateTime
+  time           String
+  locationOrUrl  String
+  eventType      String
+  capacity       Int?
+
+  registrations EventRegistration[]
+}
+
+model EventRegistration {
+  id           String   @id @default(cuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  eventId      String
+  event        Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  registeredAt DateTime @default(now())
+
+  @@unique([userId, eventId])
+}
+
+model Streak {
+  userId          String   @id
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  currentStreak   Int      @default(0)
+  longestStreak   Int      @default(0)
+  lastActivityDay DateTime // canonical user-local calendar day, stored as date-only
+}

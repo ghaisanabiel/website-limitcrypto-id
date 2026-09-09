@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: #080808;
+  color: #F5F5F3;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* visible keyboard focus everywhere — premium doesn't mean invisible focus rings */
+:focus-visible {
+  outline: 2px solid #D4AF37;
+  outline-offset: 2px;
+}
