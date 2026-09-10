@@ -1,3 +1,6 @@
+"use client";
+
+import { motion } from "framer-motion";
 import IntroSequence from "@/components/IntroSequence";
 import Navbar from "@/components/Navbar";
 import ModuleCard from "@/components/ModuleCard";
@@ -5,10 +8,21 @@ import FloatingPortfolioCard from "@/components/FloatingPortfolioCard";
 import { mockModules } from "@/lib/mock-data";
 import Link from "next/link";
 
-// Floating cards pop in ~3.3s after load — that's roughly when the intro
-// overlay finishes sliding up (see IntroSequence timings). Adjust the delay
-// prop below if you change the intro duration.
+// Floating cards + headline text all start their entrance around this time —
+// roughly when the intro overlay finishes sliding up (see IntroSequence
+// timings). Adjust this if you change the intro duration.
 const INTRO_DONE_DELAY = 3.3;
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+// Shared "rise + blur-in" entrance, staggered by index across headline,
+// paragraph, and buttons.
+function reveal(delay: number) {
+  return {
+    initial: { opacity: 0, y: 28, filter: "blur(10px)" },
+    animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+    transition: { duration: 0.7, delay, ease: EASE },
+  };
+}
 
 export default function HomePage() {
   return (
@@ -28,28 +42,39 @@ export default function HomePage() {
             image="/portofolio2.jpeg"
             alt="Portfolio return example"
             width={260}
-            delay={INTRO_DONE_DELAY + 0.2}
+            delay={INTRO_DONE_DELAY + 0.15}
           />
           <FloatingPortfolioCard
             className="top-1/3 right-0 lg:-right-8 xl:-right-16 hidden xl:block"
             image="/portofolio3.jpeg"
             alt="Portfolio return example"
             width={220}
-            delay={INTRO_DONE_DELAY + 0.4}
+            delay={INTRO_DONE_DELAY + 0.3}
           />
 
-          <h1 className="font-display font-extrabold text-4xl md:text-6xl text-ink leading-[1.05]">
+          <motion.h1
+            {...reveal(INTRO_DONE_DELAY)}
+            className="font-display font-extrabold text-4xl md:text-6xl text-ink leading-[1.05]"
+          >
             Learn the market.
             <br />
             <span className="bg-gold-gradient bg-clip-text text-transparent">
               Build your edge.
             </span>
-          </h1>
-          <p className="mt-6 text-muted text-lg max-w-xl mx-auto">
+          </motion.h1>
+
+          <motion.p
+            {...reveal(INTRO_DONE_DELAY + 0.15)}
+            className="mt-6 text-muted text-lg max-w-xl mx-auto"
+          >
             Practical education across crypto, stocks, and forex — structured
             without forcing a rigid path through it.
-          </p>
-          <div className="mt-8 flex items-center justify-center gap-4">
+          </motion.p>
+
+          <motion.div
+            {...reveal(INTRO_DONE_DELAY + 0.3)}
+            className="mt-8 flex items-center justify-center gap-4"
+          >
             <Link
               href="/learning"
               className="px-6 py-3 rounded-sm bg-gold-gradient text-black font-medium"
@@ -62,7 +87,7 @@ export default function HomePage() {
             >
               Join community
             </Link>
-          </div>
+          </motion.div>
         </section>
 
         <section className="max-w-6xl mx-auto px-6 py-16 border-t border-border">
