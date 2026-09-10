@@ -45,10 +45,10 @@ export default function HomePage() {
             delay={INTRO_DONE_DELAY + 0.15}
           />
           <FloatingPortfolioCard
-            className="bottom-4 left-0 lg:-left-8 xl:-left-16 hidden lg:block"
+            className="bottom-10 left-0 lg:-left-16 xl:-left-24 hidden lg:block"
             image="/portofolio4.jpeg"
             alt="Portfolio return example"
-            width={380}
+            width={460}
             delay={INTRO_DONE_DELAY + 0.45}
           />
           <FloatingPortfolioCard
