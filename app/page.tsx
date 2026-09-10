@@ -34,21 +34,21 @@ export default function HomePage() {
             className="top-4 left-0 lg:-left-8 xl:-left-16"
             image="/portofolio1.jpeg"
             alt="Portfolio return example"
-            width={230}
+            width={400}
             delay={INTRO_DONE_DELAY}
           />
           <FloatingPortfolioCard
-            className="bottom-0 right-0 lg:-right-8 xl:-right-16"
+            className="bottom-10 right-0 lg:-right-8 xl:-right-16"
             image="/portofolio2.jpeg"
             alt="Portfolio return example"
-            width={230}
+            width={460}
             delay={INTRO_DONE_DELAY + 0.15}
           />
           <FloatingPortfolioCard
-            className="top-1/3 right-0 lg:-right-4 xl:-right-8 hidden xl:block"
+            className="top-1/3 right-0 lg:-right-12 xl:-right-24 hidden xl:block"
             image="/portofolio3.jpeg"
             alt="Portfolio return example"
-            width={190}
+            width={ 360}
             delay={INTRO_DONE_DELAY + 0.3}
           />
 
