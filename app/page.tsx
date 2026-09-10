@@ -15,26 +15,26 @@ export default function HomePage() {
     <IntroSequence>
       <Navbar />
       <main>
-        <section className="relative max-w-4xl mx-auto px-6 pt-24 pb-20 text-center overflow-hidden">
+        <section className="relative max-w-4xl mx-auto px-6 pt-24 pb-20 text-center">
           <FloatingPortfolioCard
-            className="top-4 left-0 xl:-left-24"
+            className="top-6 left-2 lg:-left-16 xl:-left-32"
             image="/portofolio1.jpeg"
             alt="Portfolio return example"
-            width={190}
+            width={260}
             delay={INTRO_DONE_DELAY}
           />
           <FloatingPortfolioCard
-            className="bottom-16 right-0 xl:-right-24"
+            className="bottom-10 right-2 lg:-right-16 xl:-right-32"
             image="/portofolio2.jpeg"
             alt="Portfolio return example"
-            width={190}
+            width={260}
             delay={INTRO_DONE_DELAY + 0.2}
           />
           <FloatingPortfolioCard
-            className="top-40 right-4 xl:right-0 hidden lg:block"
+            className="top-44 right-2 lg:-right-4 xl:right-8 hidden lg:block"
             image="/portofolio3.jpeg"
             alt="Portfolio return example"
-            width={160}
+            width={220}
             delay={INTRO_DONE_DELAY + 0.4}
           />
 
