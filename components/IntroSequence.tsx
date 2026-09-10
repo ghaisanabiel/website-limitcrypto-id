@@ -88,7 +88,7 @@ export default function IntroSequence({ children }: { children: React.ReactNode 
                 >
                   <Link
                     href={c.href}
-                    className="font-bold text-xs md:text-sm tracking-wide text-white hover:text-gold transition-colors"
+                    className="font-bold text-base md:text-lg tracking-wide text-white hover:text-gold transition-colors"
                   >
                     {c.label}
                   </Link>
