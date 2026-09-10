@@ -1,16 +1,23 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { usePathname } from "next/navigation";
 
 // template.tsx already gives this component a fresh mount on every
 // navigation, so this just needs a plain mount-in animation — no
-// AnimatePresence, no `initial={false}` (that flag was actively
-// suppressing the animation on every remount, which is why nothing
-// appeared to happen before).
+// AnimatePresence, no `initial={false}`.
+//
+// Homepage ("/") is skipped entirely: IntroSequence already owns a full
+// entrance choreography there (black overlay + logo + corner labels). Having
+// this generic fade wrap it too meant the intro's own background/logo were
+// ALSO fading in from the outside at the same time as their own internal
+// animation — two overlapping timelines fighting each other, which is what
+// was reading as a "blink".
 export default function PageTransition({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   const reducedMotion = useReducedMotion();
 
-  if (reducedMotion) return <>{children}</>;
+  if (reducedMotion || pathname === "/") return <>{children}</>;
 
   return (
     <motion.div

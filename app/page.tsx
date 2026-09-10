@@ -29,7 +29,7 @@ export default function HomePage() {
     <IntroSequence>
       <Navbar />
       <main>
-        <section className="relative max-w-4xl mx-auto px-6 pt-24 pb-20 text-center">
+        <section className="relative max-w-4xl mx-auto px-6 flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] text-center">
           <FloatingPortfolioCard
             className="top-4 left-0 lg:-left-8 xl:-left-16"
             image="/portofolio1.jpeg"
