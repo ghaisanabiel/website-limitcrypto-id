@@ -1,33 +1,32 @@
 "use client";
 
+import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 
 type Props = {
   className: string; // positioning classes, passed per instance
-  label: string;
-  value: string;
-  sub?: string;
-  positive?: boolean;
+  image: string; // path under /public, e.g. "/portofolio1.jpeg"
+  alt: string;
+  width?: number; // px, default 200
   delay?: number;
 };
 
 // Pops in (opacity/scale) timed to land right as the intro finishes sliding
-// up, then floats on a slow infinite vertical drift. Two separate transition
-// timings on the same element: one for the entrance, one for the loop.
+// up, then floats on a slow infinite vertical drift.
 export default function FloatingPortfolioCard({
   className,
-  label,
-  value,
-  sub,
-  positive = true,
+  image,
+  alt,
+  width = 200,
   delay = 0,
 }: Props) {
   const reducedMotion = useReducedMotion();
+  const height = Math.round(width * 1.15);
 
   if (reducedMotion) {
     return (
       <div className={`hidden md:block absolute ${className}`}>
-        <Card label={label} value={value} sub={sub} positive={positive} />
+        <Card image={image} alt={alt} width={width} height={height} />
       </div>
     );
   }
@@ -43,33 +42,34 @@ export default function FloatingPortfolioCard({
         y: { duration: 4.5, delay, repeat: Infinity, ease: "easeInOut" },
       }}
     >
-      <Card label={label} value={value} sub={sub} positive={positive} />
+      <Card image={image} alt={alt} width={width} height={height} />
     </motion.div>
   );
 }
 
 function Card({
-  label,
-  value,
-  sub,
-  positive,
+  image,
+  alt,
+  width,
+  height,
 }: {
-  label: string;
-  value: string;
-  sub?: string;
-  positive: boolean;
+  image: string;
+  alt: string;
+  width: number;
+  height: number;
 }) {
   return (
-    <div className="rounded-md border border-border bg-surface/90 backdrop-blur px-4 py-3 shadow-lg shadow-black/40">
-      <span className="text-[10px] text-muted tracking-wide">{label}</span>
-      <div
-        className={`mt-1 font-display font-semibold text-lg ${
-          positive ? "text-gold" : "text-ink"
-        }`}
-      >
-        {value}
-      </div>
-      {sub && <span className="text-[10px] text-muted">{sub}</span>}
+    <div
+      className="rounded-md border border-border overflow-hidden shadow-lg shadow-black/40"
+      style={{ width }}
+    >
+      <Image
+        src={image}
+        alt={alt}
+        width={width}
+        height={height}
+        className="w-full h-auto object-cover"
+      />
     </div>
   );
 }

@@ -17,19 +17,25 @@ export default function HomePage() {
       <main>
         <section className="relative max-w-4xl mx-auto px-6 pt-24 pb-20 text-center overflow-hidden">
           <FloatingPortfolioCard
-            className="top-6 left-0 lg:-left-16"
-            label="PnL %"
-            value="+142.6%"
-            sub="BTC · Long"
+            className="top-4 left-0 xl:-left-24"
+            image="/portofolio1.jpeg"
+            alt="Portfolio return example"
+            width={190}
             delay={INTRO_DONE_DELAY}
           />
           <FloatingPortfolioCard
-            className="bottom-10 right-0 lg:-right-16"
-            label="Module Progress"
-            value="12 / 24"
-            sub="Lessons completed"
-            positive={false}
+            className="bottom-16 right-0 xl:-right-24"
+            image="/portofolio2.jpeg"
+            alt="Portfolio return example"
+            width={190}
             delay={INTRO_DONE_DELAY + 0.2}
+          />
+          <FloatingPortfolioCard
+            className="top-40 right-4 xl:right-0 hidden lg:block"
+            image="/portofolio3.jpeg"
+            alt="Portfolio return example"
+            width={160}
+            delay={INTRO_DONE_DELAY + 0.4}
           />
 
           <h1 className="font-display font-extrabold text-4xl md:text-6xl text-ink leading-[1.05]">

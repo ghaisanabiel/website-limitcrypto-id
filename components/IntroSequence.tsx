@@ -53,9 +53,9 @@ export default function IntroSequence({ children }: { children: React.ReactNode 
                 className="absolute inset-0 flex items-center justify-center"
               >
                 <div className="relative w-24 h-24 md:w-32 md:h-32">
-                  {/* Logo — drop your file at /public/logo-hex.png (or .svg) to replace this.
+                  {/* Logo — drop your file at /public/logo.png (or .svg) to replace this.
                       Swap the src below if your filename/extension differs. */}
-                  <Image src="public/logo.png" alt="Logo" fill priority className="object-contain" />
+                  <Image src="/logo.png" alt="Logo" fill priority className="object-contain" />
                 </div>
               </motion.div>
 
