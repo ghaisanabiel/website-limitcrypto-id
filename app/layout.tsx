@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
-import PageTransition from "@/components/PageTransition";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -28,9 +27,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${poppins.variable} ${inter.variable}`}>
-      <body className="font-body antialiased">
-        <PageTransition>{children}</PageTransition>
-      </body>
+      <body className="font-body antialiased">{children}</body>
     </html>
   );
 }
