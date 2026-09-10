@@ -49,24 +49,27 @@ export default function IntroSequence({ children }: { children: React.ReactNode 
             <div className="relative w-[280px] h-[280px] md:w-[360px] md:h-[360px]">
               <motion.div
                 initial={{ opacity: 0, scale: 0.92, filter: "blur(14px)" }}
-                animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+                animate={
+                  logoLoaded
+                    ? { opacity: 1, scale: 1, filter: "blur(0px)" }
+                    : { opacity: 0, scale: 0.92, filter: "blur(14px)" }
+                }
                 transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 className="absolute inset-0 flex items-center justify-center"
               >
                 <div className="relative w-24 h-24 md:w-32 md:h-32">
                   {/* Logo — drop your file at /public/logo.png (or .svg) to replace this.
                       Swap the src below if your filename/extension differs.
-                      Fades in on its own `onLoad` instead of a fixed timer, so the
-                      blur-to-sharp animation and the actual pixels arriving are
-                      never out of sync (that mismatch was causing the "blink"). */}
+                      The wrapper above only starts its blur-in animation once
+                      onLoad fires below — single source of truth, no separate
+                      opacity race on the image itself. */}
                   <Image
                     src="/logo.png"
                     alt="Logo"
                     fill
                     priority
                     onLoad={() => setLogoLoaded(true)}
-                    className="object-contain transition-opacity duration-300"
-                    style={{ opacity: logoLoaded ? 1 : 0 }}
+                    className="object-contain"
                   />
                 </div>
               </motion.div>
