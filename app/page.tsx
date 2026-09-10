@@ -17,21 +17,21 @@ export default function HomePage() {
       <main>
         <section className="relative max-w-4xl mx-auto px-6 pt-24 pb-20 text-center">
           <FloatingPortfolioCard
-            className="top-6 left-2 lg:-left-16 xl:-left-32"
+            className="top-4 left-0 lg:-left-24 xl:-left-40"
             image="/portofolio1.jpeg"
             alt="Portfolio return example"
             width={260}
             delay={INTRO_DONE_DELAY}
           />
           <FloatingPortfolioCard
-            className="bottom-10 right-2 lg:-right-16 xl:-right-32"
+            className="bottom-0 right-0 lg:-right-24 xl:-right-40"
             image="/portofolio2.jpeg"
             alt="Portfolio return example"
             width={260}
             delay={INTRO_DONE_DELAY + 0.2}
           />
           <FloatingPortfolioCard
-            className="top-44 right-2 lg:-right-4 xl:right-8 hidden lg:block"
+            className="top-1/3 right-0 lg:-right-8 xl:-right-16 hidden xl:block"
             image="/portofolio3.jpeg"
             alt="Portfolio return example"
             width={220}

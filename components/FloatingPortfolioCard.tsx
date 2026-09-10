@@ -12,7 +12,7 @@ type Props = {
 };
 
 // Pops in (opacity/scale) timed to land right as the intro finishes sliding
-// up, then floats on a slow infinite vertical drift.
+// up, then floats up-down continuously.
 export default function FloatingPortfolioCard({
   className,
   image,
@@ -33,25 +33,25 @@ export default function FloatingPortfolioCard({
 
   return (
     <motion.div
-  className={`hidden md:block absolute ${className}`}
-  initial={{ opacity: 0, scale: 0.85, y: 10 }}
-  animate={{
-    opacity: 1,
-    scale: 1,
-    y: [0, -18, 0],
-  }}
-  transition={{
-    opacity: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] },
-    scale: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] },
-    y: {
-      duration: 3,
-      delay: delay + 0.6,
-      repeat: Infinity,
-      repeatType: "loop",
-      ease: "easeInOut",
-    },
-  }}
->
+      className={`hidden md:block absolute ${className}`}
+      initial={{ opacity: 0, scale: 0.85, y: 10 }}
+      animate={{
+        opacity: 1,
+        scale: 1,
+        y: [0, -18, 0],
+      }}
+      transition={{
+        opacity: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] },
+        scale: { duration: 0.6, delay, ease: [0.16, 1, 0.3, 1] },
+        y: {
+          duration: 3,
+          delay: delay + 0.6,
+          repeat: Infinity,
+          repeatType: "loop",
+          ease: "easeInOut",
+        },
+      }}
+    >
       <Card image={image} alt={alt} width={width} height={height} />
     </motion.div>
   );
