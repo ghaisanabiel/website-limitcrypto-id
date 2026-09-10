@@ -15,6 +15,7 @@ const corners = [
 export default function IntroSequence({ children }: { children: React.ReactNode }) {
   const reducedMotion = useReducedMotion();
   const [phase, setPhase] = useState<"intro" | "closing" | "done">("intro");
+  const [logoLoaded, setLogoLoaded] = useState(false);
 
   useEffect(() => {
     // plays on every page load — no localStorage skip. Only reduced-motion
@@ -54,8 +55,19 @@ export default function IntroSequence({ children }: { children: React.ReactNode 
               >
                 <div className="relative w-24 h-24 md:w-32 md:h-32">
                   {/* Logo — drop your file at /public/logo.png (or .svg) to replace this.
-                      Swap the src below if your filename/extension differs. */}
-                  <Image src="/logo.png" alt="Logo" fill priority className="object-contain" />
+                      Swap the src below if your filename/extension differs.
+                      Fades in on its own `onLoad` instead of a fixed timer, so the
+                      blur-to-sharp animation and the actual pixels arriving are
+                      never out of sync (that mismatch was causing the "blink"). */}
+                  <Image
+                    src="/logo.png"
+                    alt="Logo"
+                    fill
+                    priority
+                    onLoad={() => setLogoLoaded(true)}
+                    className="object-contain transition-opacity duration-300"
+                    style={{ opacity: logoLoaded ? 1 : 0 }}
+                  />
                 </div>
               </motion.div>
 
