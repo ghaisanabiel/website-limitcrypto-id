@@ -11,6 +11,7 @@ import OutperformSection from "@/components/OutperformSection";
 import FreeOutlookCarousel from "@/components/FreeOutlookCarousel";
 import RoadmapSection from "@/components/RoadmapSection";
 import JoinCTASection from "@/components/JoinCTASection";
+import TestimonialMarquee from "@/components/TestimonialMarquee";
 
 // Floating cards + headline text all start their entrance around this time —
 // roughly when the intro overlay finishes sliding up (see IntroSequence
@@ -136,6 +137,7 @@ export default function HomePage() {
         <OutperformSection />
         <FreeOutlookCarousel />
         <RoadmapSection />
+        <TestimonialMarquee />
         <JoinCTASection />
       </main>
     </IntroSequence>
