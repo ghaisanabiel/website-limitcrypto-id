@@ -7,6 +7,10 @@ import ModuleCard from "@/components/ModuleCard";
 import FloatingPortfolioCard from "@/components/FloatingPortfolioCard";
 import { mockModules } from "@/lib/mock-data";
 import Link from "next/link";
+import OutperformSection from "@/components/OutperformSection";
+import FreeOutlookCarousel from "@/components/FreeOutlookCarousel";
+import RoadmapSection from "@/components/RoadmapSection";
+import JoinCTASection from "@/components/JoinCTASection";
 
 // Floating cards + headline text all start their entrance around this time —
 // roughly when the intro overlay finishes sliding up (see IntroSequence
@@ -45,10 +49,10 @@ export default function HomePage() {
             delay={INTRO_DONE_DELAY + 0.15}
           />
           <FloatingPortfolioCard
-            className="bottom-10 left-0 lg:-left-16 xl:-left-24 hidden lg:block"
+            className="bottom-4 left-0 lg:-left-8 xl:-left-16 hidden lg:block"
             image="/portofolio4.jpeg"
             alt="Portfolio return example"
-            width={460}
+            width={380}
             delay={INTRO_DONE_DELAY + 0.45}
           />
           <FloatingPortfolioCard
@@ -108,8 +112,16 @@ export default function HomePage() {
             </Link>
           </div>
           <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {mockModules.map((m) => (
-              <ModuleCard key={m.slug} mod={m} />
+            {mockModules.map((m, i) => (
+              <motion.div
+                key={m.slug}
+                initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
+              >
+                <ModuleCard mod={m} />
+              </motion.div>
             ))}
           </div>
         </section>
@@ -120,6 +132,11 @@ export default function HomePage() {
             build and share — not from selling access to the community.
           </p>
         </section>
+
+        <OutperformSection />
+        <FreeOutlookCarousel />
+        <RoadmapSection />
+        <JoinCTASection />
       </main>
     </IntroSequence>
   );
