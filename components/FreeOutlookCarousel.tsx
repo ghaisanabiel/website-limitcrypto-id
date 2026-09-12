@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 // Manual drag/scroll carousel (not a marquee) — add more filenames to this
 // array as more outlook screenshots come in.
-const outlookImages = ["/outlook-1.jpeg"];
+const outlookImages = ["/outlook-1.jpeg", "/outlook-2.jpeg", "/outlook-3.jpeg", "/outlook-4.jpeg"];
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
