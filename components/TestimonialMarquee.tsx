@@ -35,7 +35,15 @@ export default function TestimonialMarquee() {
         <span className="text-xs text-gold tracking-wide">TESTIMONIALS</span>
         <h2 className="mt-3 font-display font-bold text-3xl text-ink">What members are saying</h2>
       </div>
-      <div className="flex flex-col gap-4">
+      <div
+        className="flex flex-col gap-4"
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+          maskImage:
+            "linear-gradient(to right, transparent, black 8%, black 92%, transparent)",
+        }}
+      >
         <Row images={rows[0]} dir="left" speed={26} />
         <Row images={rows[1]} dir="right" speed={22} />
         <Row images={rows[2]} dir="left" speed={28} />
