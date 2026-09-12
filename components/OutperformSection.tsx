@@ -1,14 +1,12 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import GridSparkleBackground from "@/components/GridSparkleBackground";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function OutperformSection() {
   return (
     <section className="relative py-24 border-t border-border overflow-hidden">
-      <GridSparkleBackground />
       <div className="relative max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}

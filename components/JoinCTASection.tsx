@@ -1,14 +1,12 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import GridSparkleBackground from "@/components/GridSparkleBackground";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function JoinCTASection() {
   return (
     <section className="relative py-28 border-t border-border overflow-hidden text-center">
-      <GridSparkleBackground />
       <motion.div
         className="relative max-w-2xl mx-auto px-6"
         initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}

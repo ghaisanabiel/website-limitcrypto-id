@@ -15,7 +15,7 @@ const sparkles = [
 // `relative`; this fills it via `absolute inset-0` at a low z-index.
 export default function GridSparkleBackground() {
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
       <div
         className="absolute inset-0 opacity-40"
         style={{

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Inter } from "next/font/google";
 import "./globals.css";
+import GridSparkleBackground from "@/components/GridSparkleBackground";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -27,7 +28,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${poppins.variable} ${inter.variable}`}>
-      <body className="font-body antialiased">{children}</body>
+      <body className="font-body antialiased">
+        <GridSparkleBackground />
+        {children}
+      </body>
     </html>
   );
 }
