@@ -51,7 +51,46 @@ export default function CommunityPage() {
           </div>
         </section>
 
-        <section className="max-w-3xl mx-auto px-6 py-20">
+        <section className="max-w-4xl mx-auto px-6 py-20">
+          <motion.div
+            initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}
+            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.7, ease: EASE }}
+          >
+            <span className="text-xs text-gold tracking-wide">WHAT'S INSIDE</span>
+            <h2 className="mt-3 font-display font-semibold text-2xl text-ink">
+              A look at the channels
+            </h2>
+          </motion.div>
+
+          <div className="mt-8 grid sm:grid-cols-2 gap-5">
+            {[
+              {
+                name: "#outlook",
+                desc: "Daily and weekly market reads — where the flow is coming from and what to watch next.",
+              },
+              {
+                name: "#trade-setup",
+                desc: "Live trade ideas shared with entry, chart context, and reasoning behind the setup.",
+              },
+            ].map((ch, i) => (
+              <motion.div
+                key={ch.name}
+                initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}
+                whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                viewport={{ once: true, margin: "-80px" }}
+                transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
+                className="border border-border rounded-md p-5"
+              >
+                <span className="font-display font-semibold text-gold">{ch.name}</span>
+                <p className="mt-2 text-sm text-muted leading-relaxed">{ch.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        <section className="max-w-3xl mx-auto px-6 py-20 border-t border-border">
           <motion.div
             initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}
             whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
