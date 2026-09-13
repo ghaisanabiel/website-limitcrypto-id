@@ -1,15 +1,26 @@
 "use client";
 
-import Navbar from "@/components/Navbar";
-import GridSparkleBackground from "@/components/GridSparkleBackground";
-import Link from "next/link";
 import { motion } from "framer-motion";
+import IntroSequence from "@/components/IntroSequence";
+import Navbar from "@/components/Navbar";
+import ModuleCard from "@/components/ModuleCard";
+import FloatingPortfolioCard from "@/components/FloatingPortfolioCard";
+import { mockModules } from "@/lib/mock-data";
+import Link from "next/link";
+import OutperformSection from "@/components/OutperformSection";
+import FreeOutlookCarousel from "@/components/FreeOutlookCarousel";
+import RoadmapSection from "@/components/RoadmapSection";
+import JoinCTASection from "@/components/JoinCTASection";
+import TestimonialMarquee from "@/components/TestimonialMarquee";
 
+// Floating cards + headline text all start their entrance around this time —
+// roughly when the intro overlay finishes sliding up (see IntroSequence
+// timings). Adjust this if you change the intro duration.
+const INTRO_DONE_DELAY = 3.3;
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-// TODO: swap in the real Discord invite link once you have it.
-const DISCORD_INVITE = "#";
-
+// Shared "rise + blur-in" entrance, staggered by index across headline,
+// paragraph, and buttons.
 function reveal(delay: number) {
   return {
     initial: { opacity: 0, y: 28, filter: "blur(10px)" },
@@ -18,118 +29,117 @@ function reveal(delay: number) {
   };
 }
 
-export default function CommunityPage() {
+export default function HomePage() {
   return (
-    <>
+    <IntroSequence>
       <Navbar />
       <main>
-        <section className="relative py-28 border-b border-border overflow-hidden text-center">
-          <GridSparkleBackground />
-          <div className="relative max-w-2xl mx-auto px-6">
-            <motion.span {...reveal(0)} className="text-xs text-gold tracking-wide block">
-              COMMUNITY
-            </motion.span>
-            <motion.h1
-              {...reveal(0.1)}
-              className="mt-3 font-display font-extrabold text-4xl md:text-5xl text-ink leading-tight"
+        <section className="relative max-w-4xl mx-auto px-6 flex flex-col items-center justify-center min-h-[calc(100vh-4rem)] text-center">
+          <FloatingPortfolioCard
+            className="top-4 left-0 lg:-left-8 xl:-left-16"
+            image="/portofolio1.jpeg"
+            alt="Portfolio return example"
+            width={400}
+            delay={INTRO_DONE_DELAY}
+          />
+          <FloatingPortfolioCard
+            className="bottom-10 right-0 lg:-right-8 xl:-right-16"
+            image="/portofolio2.jpeg"
+            alt="Portfolio return example"
+            width={460}
+            delay={INTRO_DONE_DELAY + 0.15}
+          />
+          <FloatingPortfolioCard
+            className="bottom-4 left-0 lg:-left-8 xl:-left-16 hidden lg:block"
+            image="/portofolio4.jpeg"
+            alt="Portfolio return example"
+            width={380}
+            delay={INTRO_DONE_DELAY + 0.45}
+          />
+          <FloatingPortfolioCard
+            className="top-1/3 right-0 lg:-right-12 xl:-right-24 hidden xl:block"
+            image="/portofolio3.jpeg"
+            alt="Portfolio return example"
+            width={360}
+            delay={INTRO_DONE_DELAY + 0.3}
+          />
+
+          <motion.h1
+            {...reveal(INTRO_DONE_DELAY)}
+            className="font-display font-extrabold text-4xl md:text-6xl text-ink leading-[1.05]"
+          >
+            Learn the market.
+            <br />
+            <span className="bg-gold-gradient bg-clip-text text-transparent">
+              Build your edge.
+            </span>
+          </motion.h1>
+
+          <motion.p
+            {...reveal(INTRO_DONE_DELAY + 0.15)}
+            className="mt-6 text-muted text-lg max-w-xl mx-auto"
+          >
+            Practical education across crypto, stocks, and forex — structured
+            without forcing a rigid path through it.
+          </motion.p>
+
+          <motion.div
+            {...reveal(INTRO_DONE_DELAY + 0.3)}
+            className="mt-8 flex items-center justify-center gap-4"
+          >
+            <Link
+              href="/learning"
+              className="px-6 py-3 rounded-sm bg-gold-gradient text-black font-medium"
             >
-              Free, and it stays that way.
-            </motion.h1>
-            <motion.p {...reveal(0.25)} className="mt-6 text-muted text-lg leading-relaxed">
-              Value should come from what we build and share — not from
-              selling access to a group chat.
-            </motion.p>
-            <motion.div {...reveal(0.4)} className="mt-8">
-              <Link
-                href={DISCORD_INVITE}
-                target="_blank"
-                className="inline-block px-8 py-3.5 rounded-full border-2 border-gold text-gold font-medium hover:bg-gold hover:text-black transition-colors"
-              >
-                Available on Discord
-              </Link>
-            </motion.div>
-          </div>
+              Explore modules
+            </Link>
+            <Link
+              href="/community"
+              className="px-6 py-3 rounded-sm border border-border text-ink"
+            >
+              Join community
+            </Link>
+          </motion.div>
         </section>
 
-        <section className="max-w-4xl mx-auto px-6 py-20">
-          <motion.div
-            initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: EASE }}
-          >
-            <span className="text-xs text-gold tracking-wide">WHAT'S INSIDE</span>
-            <h2 className="mt-3 font-display font-semibold text-2xl text-ink">
-              A look at the channels
+        <div className="border-t border-border" />
+        <section className="max-w-6xl mx-auto px-6 py-16">
+          <div className="flex items-baseline justify-between">
+            <h2 className="font-display font-semibold text-2xl text-ink">
+              Featured modules
             </h2>
-          </motion.div>
-
-          <div className="mt-8 grid sm:grid-cols-2 gap-5">
-            {[
-              {
-                name: "#outlook",
-                desc: "Daily and weekly market reads — where the flow is coming from and what to watch next.",
-              },
-              {
-                name: "#trade-setup",
-                desc: "Live trade ideas shared with entry, chart context, and reasoning behind the setup.",
-              },
-            ].map((ch, i) => (
+            <Link href="/learning" className="text-sm text-muted hover:text-ink">
+              View all
+            </Link>
+          </div>
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {mockModules.map((m, i) => (
               <motion.div
-                key={ch.name}
+                key={m.slug}
                 initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}
                 whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                 viewport={{ once: true, margin: "-80px" }}
                 transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
-                className="border border-border rounded-md p-5"
               >
-                <span className="font-display font-semibold text-gold">{ch.name}</span>
-                <p className="mt-2 text-sm text-muted leading-relaxed">{ch.desc}</p>
+                <ModuleCard mod={m} />
               </motion.div>
             ))}
           </div>
         </section>
 
-        <section className="max-w-3xl mx-auto px-6 py-20 border-t border-border">
-          <motion.div
-            initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, ease: EASE }}
-          >
-            <h2 className="font-display font-semibold text-2xl text-ink">
-              What happens here
-            </h2>
-            <p className="mt-3 text-muted leading-relaxed">
-              Day-to-day discussion, market talk, and questions between people
-              learning the same markets. Premium modules fund the platform —
-              being part of the community doesn&apos;t require buying anything.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 28, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
-            className="mt-14 border-t border-border pt-8"
-          >
-            <h2 className="font-display font-semibold text-2xl text-ink">
-              Where to join
-            </h2>
-            <p className="mt-3 text-muted">
-              The community lives on Discord — free, always.
-            </p>
-            <Link
-              href={DISCORD_INVITE}
-              target="_blank"
-              className="mt-4 inline-block px-6 py-3 rounded-sm bg-gold-gradient text-black font-medium"
-            >
-              Join on Discord
-            </Link>
-          </motion.div>
+        <section className="max-w-3xl mx-auto px-6 py-20 border-t border-border text-center">
+          <p className="text-ink text-lg leading-relaxed">
+            The community will always be free. Value should come from what we
+            build and share — not from selling access to the community.
+          </p>
         </section>
+
+        <OutperformSection />
+        <FreeOutlookCarousel />
+        <RoadmapSection />
+        <TestimonialMarquee />
+        <JoinCTASection />
       </main>
-    </>
+    </IntroSequence>
   );
 }
