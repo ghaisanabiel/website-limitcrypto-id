@@ -12,7 +12,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 bg-bg/90 backdrop-blur border-b border-border">
       <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 h-16">
-        <Link href="/" className="font-display font-bold text-ink">
+        <Link href="/" prefetch={false} className="font-display font-bold text-ink">
           LIMITCRYPTO
         </Link>
 
