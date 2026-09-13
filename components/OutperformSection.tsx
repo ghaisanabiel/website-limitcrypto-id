@@ -15,16 +15,16 @@ export default function OutperformSection() {
           transition={{ duration: 0.7, ease: EASE }}
         >
           <span className="text-xs text-gold tracking-wide">TRACK RECORD</span>
-          <h2 className="mt-3 font-display font-bold text-3xl md:text-4xl text-ink leading-tight">
+          <h2 className="mt-3 font-display font-bold text-5xl md:text-6xl text-ink leading-tight">
             Outperforming BTC,<br />with real risk management.
           </h2>
           <div className="mt-8 flex gap-10">
             <div>
-              <div className="font-display font-extrabold text-4xl text-gold">+803.51%</div>
+              <div className="font-display font-extrabold text-6xl text-gold">+803.51%</div>
               <div className="mt-1 text-sm text-muted">Total ROI (30D)</div>
             </div>
             <div>
-              <div className="font-display font-extrabold text-4xl text-ink">-2.86%</div>
+              <div className="font-display font-extrabold text-6xl text-ink">-2.86%</div>
               <div className="mt-1 text-sm text-muted">BTC, same period</div>
             </div>
           </div>
