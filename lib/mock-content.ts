@@ -1,3 +1,5 @@
+export type EventStatus = "upcoming" | "live" | "past";
+
 export type EventData = {
   slug: string;
   title: string;
@@ -6,6 +8,7 @@ export type EventData = {
   time: string;
   eventType: string;
   locationOrUrl: string;
+  status: EventStatus;
 };
 
 export const mockEvents: EventData[] = [
@@ -18,6 +21,7 @@ export const mockEvents: EventData[] = [
     time: "20:00 WIB",
     eventType: "Market Analysis Session",
     locationOrUrl: "Online",
+    status: "live",
   },
   {
     slug: "risk-management-workshop",
@@ -28,6 +32,7 @@ export const mockEvents: EventData[] = [
     time: "19:30 WIB",
     eventType: "Trading Workshop",
     locationOrUrl: "Online",
+    status: "upcoming",
   },
   {
     slug: "community-ama",
@@ -37,6 +42,17 @@ export const mockEvents: EventData[] = [
     time: "21:00 WIB",
     eventType: "AMA",
     locationOrUrl: "Online",
+    status: "upcoming",
+  },
+  {
+    slug: "coinfest-asia-recap",
+    title: "Coinfest Asia Recap",
+    description: "What we shared on stage, and the questions the audience asked afterward.",
+    date: "Aug 21, 2026",
+    time: "—",
+    eventType: "Community Meetup",
+    locationOrUrl: "Bali",
+    status: "past",
   },
 ];
 
