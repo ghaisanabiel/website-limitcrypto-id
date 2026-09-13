@@ -12,9 +12,12 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-40 bg-bg/90 backdrop-blur border-b border-border">
       <nav className="max-w-6xl mx-auto flex items-center justify-between px-6 h-16">
-        <Link href="/" prefetch={false} className="font-display font-bold text-ink">
+        {/* Plain <a>, not next/link — forces a real full-page navigation,
+            bypassing Next's client-side router cache entirely. Only use
+            this if the cache bug returns; otherwise Link is preferred. */}
+        <a href="/" className="font-display font-bold text-ink">
           LIMITCRYPTO
-        </Link>
+        </a>
 
         <div className="hidden md:flex items-center gap-8 text-sm text-muted">
           {links.map((l) => (
