@@ -2,20 +2,13 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
-const corners = [
-  { label: "COMMUNITY", href: "/community", pos: "top-10 left-6 md:top-16 md:left-16" },
-  { label: "MODULES", href: "/learning", pos: "top-10 right-6 md:top-16 md:right-16" },
-  { label: "CHANNEL", href: "/channel", pos: "bottom-10 left-6 md:bottom-16 md:left-16" },
-  { label: "EVENTS", href: "/events", pos: "bottom-10 right-6 md:bottom-16 md:right-16" },
-] as const;
+const words = ["COMMUNITY", "MODULES", "CHANNEL", "EVENTS"] as const;
 
-// Timing for each label's cycle: rise+blur in, hold, fade out — fully
-// sequential (one finishes fading out before the next starts).
+// Timing for each word's cycle: rise+blur in, hold, fade out — sequential.
 const RISE_MS = 500;
 const HOLD_MS = 500;
 const FADE_MS = 300;
@@ -34,7 +27,7 @@ export default function IntroSequence({ children }: { children: React.ReactNode 
     let index = 0;
     const interval = setInterval(() => {
       index++;
-      if (index >= corners.length) {
+      if (index >= words.length) {
         clearInterval(interval);
         setActiveIndex(-1);
         setTimeout(() => setPhase("closing"), 400);
@@ -63,7 +56,30 @@ export default function IntroSequence({ children }: { children: React.ReactNode 
             animate={{ y: phase === "closing" ? "-100%" : 0 }}
             transition={{ duration: 0.55, ease: [0.65, 0, 0.35, 1] }}
           >
-            {/* Logo — small, centered, on top of everything (z-10) */}
+            {/* Giant word — dead center, gradient fill (white top ~70% -> black),
+                sits BEHIND the logo. One word visible at a time. */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <AnimatePresence mode="wait">
+                {activeIndex >= 0 && (
+                  <motion.span
+                    key={words[activeIndex]}
+                    initial={{ opacity: 0, y: 30, filter: "blur(14px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: RISE_MS / 1000, ease: EASE }}
+                    className="font-extrabold text-6xl sm:text-8xl md:text-9xl tracking-tight bg-clip-text text-transparent"
+                    style={{
+                      backgroundImage:
+                        "linear-gradient(to bottom, #ffffff 0%, #ffffff 70%, #000000 100%)",
+                    }}
+                  >
+                    {words[activeIndex]}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Logo — small, centered, on top (z-10) */}
             <motion.div
               initial={{ opacity: 0, scale: 0.92, filter: "blur(14px)" }}
               animate={
@@ -83,38 +99,6 @@ export default function IntroSequence({ children }: { children: React.ReactNode 
                 className="object-contain"
               />
             </motion.div>
-
-            {/* Giant one-at-a-time labels, positioned toward the screen's
-                corners so they don't collide with the centered logo. */}
-            {corners.map((c, i) => (
-              <div key={c.label} className={`absolute ${c.pos}`}>
-                <AnimatePresence>
-                  {activeIndex === i && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 30, filter: "blur(14px)" }}
-                      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: RISE_MS / 1000, ease: EASE }}
-                      className="relative px-6 py-5"
-                    >
-                      <div
-                        className="absolute inset-0 -z-10 rounded-lg"
-                        style={{
-                          background:
-                            "linear-gradient(to bottom, transparent, rgba(0,0,0,0.8))",
-                        }}
-                      />
-                      <Link
-                        href={c.href}
-                        className="font-extrabold text-4xl sm:text-5xl md:text-7xl tracking-tight text-white hover:text-gold transition-colors"
-                      >
-                        {c.label}
-                      </Link>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
-            ))}
           </motion.div>
         )}
       </AnimatePresence>
