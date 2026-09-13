@@ -67,8 +67,9 @@ export default function IntroSequence({ children }: { children: React.ReactNode 
                     animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                     exit={{ opacity: 0 }}
                     transition={{ duration: RISE_MS / 1000, ease: EASE }}
-                    className="font-extrabold text-6xl sm:text-8xl md:text-9xl tracking-tight bg-clip-text text-transparent"
+                    className="font-extrabold tracking-tight bg-clip-text text-transparent"
                     style={{
+                      fontSize: "clamp(4rem, 16vw, 13rem)",
                       backgroundImage:
                         "linear-gradient(to bottom, #ffffff 0%, #ffffff 70%, #000000 100%)",
                     }}

@@ -16,7 +16,11 @@ import TestimonialMarquee from "@/components/TestimonialMarquee";
 // Floating cards + headline text all start their entrance around this time —
 // roughly when the intro overlay finishes sliding up (see IntroSequence
 // timings). Adjust this if you change the intro duration.
-const INTRO_DONE_DELAY = 3.3;
+// Intro now cycles 4 words sequentially (~1.3s each) before sliding up —
+// this must stay roughly in sync with IntroSequence's own timing constants,
+// or homepage content finishes revealing while still hidden behind the
+// overlay and looks static/stiff the moment it lifts.
+const INTRO_DONE_DELAY = 6.3;
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 // Shared "rise + blur-in" entrance, staggered by index across headline,
